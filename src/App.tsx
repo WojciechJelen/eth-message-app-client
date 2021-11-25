@@ -6,8 +6,9 @@ import { useWallet } from "./hooks/useWallet";
 import { MessageItem } from "./components/Message";
 import { Message } from "./interfaces";
 
-import "./App.css";
 import { useContractEvent } from "./hooks/useMessageContract";
+
+import "./styles/output.css";
 
 const { ethereum } = window;
 
@@ -69,9 +70,10 @@ const App = () => {
           return {
             address: message.sender,
             timestamp: new Date(message.timestamp * 1000),
-            message: message.content,
+            content: message.message,
           };
         });
+
         setAllMessages(mappedMessages);
       } else {
         console.warn("Ethereum object doesn't exist!");
@@ -99,25 +101,44 @@ const App = () => {
   }, [account, loading, error, getAllMessages]);
 
   return (
-    <div className="mainContainer">
-      <div className="dataContainer">
-        <div className="header">
-          <span role="img" aria-label="weaving hand">
-            👋{" "}
-          </span>
-          Hey there!
-        </div>
+    <div className="bg-gray-900 p-20  ">
+      <div>
+        <h1 className="text-5xl text-white">Decentralized Messaging</h1>
+      </div>
+      <div className="mt-10">
+        <form className="flex">
+          <input
+            className="border-indygo-400 rounded-lg mr-3 w-8/12"
+            onChange={onInputChange}
+            value={inputValue}
+          />
 
-        <div className="bio">{isMining && <span>Mining...</span>}</div>
-
-        <form>
-          <input onChange={onInputChange} value={inputValue} />
+          {/* <div className="absolute inset-0 bg-pink-600 rounded-lg"></div> */}
           <button
-            className="waveButton"
+            disabled={isMining}
+            className=" relative px-7 bg-black rounded-lg leading-none flex items-center py-3 w-4/12"
             onClick={onSendButtonClick}
             type="button"
           >
-            Send Message
+            <span className="flex items center space-x-5 text-pink-600 pr-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                />
+              </svg>
+            </span>
+            <span className="text-indigo-400 ">
+              {isMining ? "Mining..." : "Send Message"}
+            </span>
           </button>
         </form>
 

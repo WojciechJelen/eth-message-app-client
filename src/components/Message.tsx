@@ -7,17 +7,12 @@ interface Props {
 
 export const MessageItem: React.FC<Props> = ({ message }) => {
   return (
-    <div
-      key={message.content}
-      style={{
-        backgroundColor: "OldLace",
-        marginTop: "16px",
-        padding: "8px",
-      }}
-    >
-      <div>Address: {message.address}</div>
-      <div>Time: {message.timestamp.toString()}</div>
-      <div>Message: {message.content}</div>
+    <div key={message.content} className="rounded-lg p-6 mt-8 bg-black">
+      <div className="text-gray-100">Address: {message.address}</div>
+      <div className="text-gray-100 bg-black">
+        Time: {message.timestamp.toString()}
+      </div>
+      <div className="text-gray-100 bg-black">Message: {message.content}</div>
     </div>
   );
 };
